@@ -1,4 +1,4 @@
-# command-filter
+# cc-command-filter
 
 A Claude Code hook that automatically intercepts verbose terminal commands, saves full output to a log file, and returns concise summaries to the AI - **saving 95%+ tokens** on build commands, package installs, and test runs.
 
@@ -29,13 +29,13 @@ This hook:
 
 ```bash
 # Clone this repo
-git clone https://github.com/yourusername/command-filter.git ~/.command-filter-repo
+git clone https://github.com/arekhalpern/cc-command-filter.git ~/.cc-command-filter
 
 # Or just download the hook script
-mkdir -p ~/.command-filter-repo/hooks
-curl -o ~/.command-filter-repo/hooks/smart-bash-hook.sh \
-  https://raw.githubusercontent.com/yourusername/command-filter/main/hooks/smart-bash-hook.sh
-chmod +x ~/.command-filter-repo/hooks/smart-bash-hook.sh
+mkdir -p ~/.cc-command-filter/hooks
+curl -o ~/.cc-command-filter/hooks/smart-bash-hook.sh \
+  https://raw.githubusercontent.com/arekhalpern/cc-command-filter/main/hooks/smart-bash-hook.sh
+chmod +x ~/.cc-command-filter/hooks/smart-bash-hook.sh
 ```
 
 ### 2. Configure Claude Code
@@ -51,7 +51,7 @@ Add the hook to your Claude Code settings. Edit `~/.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "~/.command-filter-repo/hooks/smart-bash-hook.sh",
+            "command": "~/.cc-command-filter/hooks/smart-bash-hook.sh",
             "timeout": 300
           }
         ]
@@ -91,7 +91,7 @@ To skip permission prompts for common verbose commands, add these to your settin
         "hooks": [
           {
             "type": "command",
-            "command": "~/.command-filter-repo/hooks/smart-bash-hook.sh",
+            "command": "~/.cc-command-filter/hooks/smart-bash-hook.sh",
             "timeout": 300
           }
         ]
@@ -109,7 +109,7 @@ Settings take effect after restart.
 
 Just use Claude Code normally. When Claude runs a verbose command:
 
-**Before (without command-filter):**
+**Before (without cc-command-filter):**
 ```
 > npm install
 
@@ -130,7 +130,7 @@ Run `npm audit` for details.
 ```
 *(~500 tokens)*
 
-**After (with command-filter):**
+**After (with cc-command-filter):**
 ```
 > npm install
 
@@ -222,13 +222,13 @@ LOGS_DIR="$HOME/.command-filter"  # Change this
 ### Hook not intercepting commands
 
 1. Check settings are valid JSON: `cat ~/.claude/settings.json | jq .`
-2. Verify hook path is correct and executable: `ls -la ~/.command-filter-repo/hooks/`
+2. Verify hook path is correct and executable: `ls -la ~/.cc-command-filter/hooks/`
 3. Restart Claude Code after settings changes
 
 ### Commands failing
 
 1. Check log for errors: `cat ~/.command-filter/latest.log`
-2. Verify hook has execute permission: `chmod +x ~/.command-filter-repo/hooks/smart-bash-hook.sh`
+2. Verify hook has execute permission: `chmod +x ~/.cc-command-filter/hooks/smart-bash-hook.sh`
 
 ### Compound commands not intercepted
 
